@@ -2,19 +2,24 @@
     <div class="px-4 sm:px-6 lg:px-8">
         <div class="sm:flex sm:items-center">
             <div class="sm:flex-auto">
-                <h1 class="text-base font-semibold leading-6 text-gray-900 my-4">To-Do List</h1>
+                <h1 class="text-base font-semibold leading-6 text-gray-900 my-4 flex items-center">To-Do List<span
+                        class="inline-flex items-center gap-x-1.5 rounded-md ml-4 bg-yellow-100 px-1.5 text-xs font-medium text-yellow-800">
+                        <svg class="h-1.5 w-1.5 fill-yellow-500" viewBox="0 0 6 6" aria-hidden="true">
+                            <circle cx="3" cy="3" r="3" />
+                        </svg>
+                        {{ notCompletedTasksCount }} tasks left
+                    </span></h1>
                 <input v-model="newTask" @keyup.enter="addTask" type="text" placeholder="Add a new task"
                     class="p-2 border rounded w-full" />
             </div>
             <div class="mt-4 sm:ml-16 sm:mt-0 sm:flex-none">
-                <span>{{ notCompletedTasksCount }} tasks left</span>
-                <button @click="clearCompleted" class="text-red-600">Clear all completed</button>
+
             </div>
         </div>
         <div class="mt-8 flow-root">
             <div class="-mx-4 -my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
-                <div class="inline-block min-w-full py-2 align-middle sm:px-6 lg:px-8">
-                    <table class="min-w-full divide-y divide-gray-300" v-if="tasks.length > 0">
+                <div class="inline-block min-w-full py-2 align-middle sm:px-6 lg:px-8" v-if="tasks.length > 0">
+                    <table class="min-w-full divide-y divide-gray-300">
                         <thead>
                             <tr>
                                 <th scope="col"
@@ -118,6 +123,7 @@
 
                             </tr>
                         </tbody>
+
                     </table>
                     <TransitionRoot as="template" :show="editModal">
                         <Dialog as="div" class="relative z-10" @close="editModal = false">
@@ -174,24 +180,24 @@
                             </div>
                         </Dialog>
                     </TransitionRoot>
-                    <!-- <input v-model="editedTask.title" type="text" placeholder="Title"
-                                                class="p-2 border rounded mb-2 w-full" />
-                                            <textarea v-model="editedTask.content" placeholder="Content" rows="4"
-                                                class="p-2 border rounded w-full"></textarea>
-                                            <div class="flex justify-end mt-4">
-                                                <button @click="updateTask">Save</button>
-                                                <button @click="closeEditModal" class="ml-2">Cancel</button>
-                                            </div> -->
+                    <div class="flex justify-end mt-6">
+                        <button @click="clearCompleted" type="button"
+                            class="inline-flex w-48 justify-center rounded-md bg-yellow-500 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-yellow-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-yellow-400 sm:col-start-2">Clear
+                            all completed
+                            <ArrowPathIcon class="ml-1 h-5 w-5" aria-hidden="true" />
+                        </button>
+                    </div>
                 </div>
             </div>
         </div>
+
     </div>
 </template>
 
 <script setup lang="ts">
 import { ref, computed } from "vue";
 import { Dialog, DialogPanel, DialogTitle, TransitionChild, TransitionRoot, Switch } from '@headlessui/vue'
-import { XCircleIcon, ShieldExclamationIcon, MinusCircleIcon, TrashIcon, PencilIcon, CheckCircleIcon } from '@heroicons/vue/20/solid'
+import { XCircleIcon, ShieldExclamationIcon, MinusCircleIcon, TrashIcon, PencilIcon, CheckCircleIcon, ArrowPathIcon } from '@heroicons/vue/20/solid'
 
 const newTask = ref<string>("");
 const tasks = ref<{ title: string; content: string; completed: boolean }[]>([]);
