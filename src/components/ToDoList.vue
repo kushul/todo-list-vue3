@@ -242,6 +242,3 @@ const clearCompleted = () => {
 };
 </script>
 
-<style scoped>
-/* Add your custom CSS styles or use Tailwind classes here */
-</style>
