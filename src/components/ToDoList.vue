@@ -120,8 +120,7 @@
                         </tbody>
                     </table>
                     <TransitionRoot as="template" :show="editModal">
-                        <Dialog as="div" :static="true" class="relative z-10 pointer-events-none"
-                            @close="editModal = false">
+                        <Dialog as="div" class="relative z-10" @close="editModal = false">
                             <TransitionChild as="template" enter="ease-out duration-300" enter-from="opacity-0"
                                 enter-to="opacity-100" leave="ease-in duration-200" leave-from="opacity-100"
                                 leave-to="opacity-0">
@@ -138,14 +137,36 @@
                                         leave-to="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95">
                                         <DialogPanel
                                             class="relative transform overflow-hidden rounded-lg bg-white px-4 pb-4 pt-5 text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg sm:p-6">
-                                            <h2 class="text-xl font-semibold mb-2">Edit Task</h2>
-                                            <input v-model="editedTask.title" type="text" placeholder="Title"
-                                                class="p-2 border rounded mb-2 w-full" />
-                                            <textarea v-model="editedTask.content" placeholder="Content" rows="4"
-                                                class="p-2 border rounded w-full"></textarea>
-                                            <div class="flex justify-end mt-4">
-                                                <button @click="updateTask">Save</button>
-                                                <button @click="closeEditModal" class="ml-2">Cancel</button>
+                                            <div>
+                                                <div
+                                                    class="mx-auto flex h-12 w-12 items-center justify-center rounded-full bg-yellow-100">
+                                                    <PencilIcon class="h-6 w-6 text-yellow-600" aria-hidden="true" />
+                                                </div>
+                                                <div class="mt-3 text-center sm:mt-5">
+                                                    <DialogTitle as="h3"
+                                                        class="text-base font-semibold leading-6 text-gray-900">
+                                                        Edit task</DialogTitle>
+
+                                                </div>
+                                            </div>
+                                            <div>
+                                                <input v-model="editedTask.title" type="text" placeholder="Title"
+                                                    class="p-2 border rounded mb-2 w-full" />
+                                                <textarea v-model="editedTask.content" placeholder="Content" rows="4"
+                                                    class="p-2 border rounded w-full"></textarea>
+                                            </div>
+                                            <div
+                                                class="mt-5 sm:mt-6 sm:grid sm:grid-flow-row-dense sm:grid-cols-2 sm:gap-3">
+                                                <button type="button"
+                                                    class="inline-flex w-full justify-center rounded-md bg-green-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-green-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-green-600 sm:col-start-2"
+                                                    @click="updateTask">Update task
+                                                    <CheckCircleIcon class="ml-1 h-5 w-5" aria-hidden="true" />
+                                                </button>
+                                                <button type="button"
+                                                    class="mt-3 inline-flex w-full justify-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 sm:col-start-1 sm:mt-0"
+                                                    @click="closeEditModal" ref="cancelButtonRef">Cancel
+                                                    <MinusCircleIcon class="ml-1 h-5 w-5" aria-hidden="true" />
+                                                </button>
                                             </div>
                                         </DialogPanel>
                                     </TransitionChild>
@@ -153,6 +174,14 @@
                             </div>
                         </Dialog>
                     </TransitionRoot>
+                    <!-- <input v-model="editedTask.title" type="text" placeholder="Title"
+                                                class="p-2 border rounded mb-2 w-full" />
+                                            <textarea v-model="editedTask.content" placeholder="Content" rows="4"
+                                                class="p-2 border rounded w-full"></textarea>
+                                            <div class="flex justify-end mt-4">
+                                                <button @click="updateTask">Save</button>
+                                                <button @click="closeEditModal" class="ml-2">Cancel</button>
+                                            </div> -->
                 </div>
             </div>
         </div>
@@ -162,7 +191,7 @@
 <script setup lang="ts">
 import { ref, computed } from "vue";
 import { Dialog, DialogPanel, DialogTitle, TransitionChild, TransitionRoot, Switch } from '@headlessui/vue'
-import { XCircleIcon, ShieldExclamationIcon, MinusCircleIcon, TrashIcon, PencilIcon } from '@heroicons/vue/20/solid'
+import { XCircleIcon, ShieldExclamationIcon, MinusCircleIcon, TrashIcon, PencilIcon, CheckCircleIcon } from '@heroicons/vue/20/solid'
 
 const newTask = ref<string>("");
 const tasks = ref<{ title: string; content: string; completed: boolean }[]>([]);
