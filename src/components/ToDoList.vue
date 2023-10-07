@@ -228,6 +228,7 @@ function confirmTaskEdit() {
         content: editedContent.value,
         completed: selectedTask.value.completed,
     }
+    updateTask(updatedTask)
     selectedTask.value = null;
     editModal.value = false;
 }
