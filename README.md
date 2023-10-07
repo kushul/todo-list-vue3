@@ -9,13 +9,14 @@
 - Typescript
 - headlessui
 - heroicons
+- pinia
 
 ## setup
 
 Git
 
 ```
-git checkout -b develop
+git checkout -b main
 ```
 
 step 1
@@ -43,6 +44,14 @@ _should run on http://localhost:5173/ by default_
 - At the top there is a counter of the number of the not completed tasks
 - Button "clear all completed" will reset all tasks if the switch is set to completed
 - Responsive
+- Pinia is used to encapsulates the business logic for CRUD of tasks
+
+## Future improvements
+
+- Break all the CRUD function into components(much cleaner)
+- Better ui/ux
+- Make the app PWA(works offline)
+- Add snackbar component to give more information to the user when updating something on the page
 
 ## REFERENCE
 

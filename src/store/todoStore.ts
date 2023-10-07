@@ -28,9 +28,6 @@ export const useTodoStore = defineStore('todo', {
             let index = this.tasks.findIndex(item => item.id === id)
             this.tasks.splice(index, 1);
         },
-        closeEditModal() {
-            this.selectedTaskIndex = null;
-        },
         updateTask(task: Task) {
             let index = this.tasks.findIndex(item => item.id === task.id)
             if (index) {

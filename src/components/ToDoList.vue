@@ -1,21 +1,6 @@
 <template>
     <div class="px-4 sm:px-6 lg:px-8">
-        <div class="sm:flex sm:items-center">
-            <div class="sm:flex-auto">
-                <h1 class="text-base font-semibold leading-6 text-gray-900 my-4 flex items-center">To-Do List<span
-                        class="inline-flex items-center gap-x-1.5 rounded-md ml-4 bg-yellow-100 px-1.5 text-xs font-medium text-yellow-800">
-                        <svg class="h-1.5 w-1.5 fill-yellow-500" viewBox="0 0 6 6" aria-hidden="true">
-                            <circle cx="3" cy="3" r="3" />
-                        </svg>
-                        {{ notCompletedTasksCount }} tasks left
-                    </span></h1>
-                <input v-model="taskInput" @keyup.enter="addTaskToStore" type="text" placeholder="Add a new task"
-                    class="p-2 border rounded w-full" />
-            </div>
-            <div class="mt-4 sm:ml-16 sm:mt-0 sm:flex-none">
-
-            </div>
-        </div>
+        <AddTask :taskCount="notCompletedTasksCount" />
         <div class="mt-8 flow-root">
             <div class="-mx-4 -my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
                 <div class="inline-block min-w-full py-2 align-middle sm:px-6 lg:px-8" v-if="tasks.length > 0">
@@ -37,7 +22,7 @@
                         <tbody class="divide-y divide-gray-200">
                             <tr v-for="(task, index) in tasks" :key="index">
                                 <td class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-0">{{
-                                    task.title }} {{ index }}</td>
+                                    task.title }}</td>
                                 <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{{ task.content }}</td>
                                 <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
                                     <Switch v-model="task.completed"
@@ -195,6 +180,7 @@
 
 <script setup lang="ts">
 import { ref, computed } from "vue";
+import AddTask from './AddTask.vue'
 import { Dialog, DialogPanel, DialogTitle, TransitionChild, TransitionRoot, Switch } from '@headlessui/vue'
 import { XCircleIcon, ShieldExclamationIcon, MinusCircleIcon, TrashIcon, PencilIcon, CheckCircleIcon, ArrowPathIcon } from '@heroicons/vue/20/solid'
 import { useTodoStore } from "../store/todoStore";
@@ -203,7 +189,7 @@ import { storeToRefs } from "pinia";
 
 const todoStore = useTodoStore();
 const { tasks } = storeToRefs(todoStore)
-const { addTask, deleteTask, closeEditModal, updateTask, clearCompleted } = todoStore
+const { deleteTask, updateTask, clearCompleted } = todoStore
 
 
 const openDeleteModal = ref<boolean>(false);
@@ -212,17 +198,6 @@ const selectedTask = ref<null | Task>(null);
 const editedTitle = ref<string>('');
 const editedContent = ref<string>('');
 
-// Use computed properties with the store
-const taskInput = ref('');
-
-function clearInput() {
-    taskInput.value = ''
-}
-
-function addTaskToStore() {
-    addTask(taskInput.value)
-    clearInput()
-}
 
 function showDeleteModal(task: Task) {
     selectedTask.value = task;
@@ -253,8 +228,6 @@ function confirmTaskEdit() {
         content: editedContent.value,
         completed: selectedTask.value.completed,
     }
-    console.log(updatedTask)
-    updateTask(updatedTask)
     selectedTask.value = null;
     editModal.value = false;
 }
