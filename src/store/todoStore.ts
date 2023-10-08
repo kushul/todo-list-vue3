@@ -30,7 +30,7 @@ export const useTodoStore = defineStore('todo', {
         },
         updateTask(task: Task) {
             let index = this.tasks.findIndex(item => item.id === task.id)
-            if (index) {
+            if (index != -1) {
                 this.tasks[index] = task;
             }
         },
